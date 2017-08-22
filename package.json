@@ -2,9 +2,13 @@
   "name": "fazendocontas",
   "version": "1.0.0",
   "description": "Site de auxílio no estudo de matemática fundamental",
+  "engines": {
+    "node": "6.11.1"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/tiagolpadua/fazendocontas/issues"
   },
-  "homepage": "https://github.com/tiagolpadua/fazendocontas#readme"
+  "homepage": "https://github.com/tiagolpadua/fazendocontas#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
 }
