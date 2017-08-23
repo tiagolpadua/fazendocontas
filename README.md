@@ -29,6 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 https://medium.com/@ryanchenkie_40935/angular-cli-deployment-host-your-angular-2-app-on-heroku-3f266f13f352
 
+http://localhost:4200
 https://fazendocontas.herokuapp.com/
 heroku login
 heroku git:remote -a fazendocontas
