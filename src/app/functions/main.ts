@@ -1,7 +1,13 @@
-interface IExercicio {
+import * as _ from 'underscore';
+
+class Exercicio {
   enunciado: string;
   respostas: string[];
   indiceRespostaCorreta: number;
+
+  constructor() {
+    this.respostas = [];
+  }
 }
 
 interface IQuestaoSimples {
@@ -12,34 +18,38 @@ interface IQuestaoSimples {
 
 export class Functions {
 
-  gerarExerciciosSomaAte10(qtd: number): IExercicio[] {
-    const ret: IExercicio[] = [];
-    for (let i = 0; i < (qtd * 4); i ++) {
+  gerarExerciciosSomaAte10(qtd: number): Exercicio[] {
+    const ret: Exercicio[] = [];
+    for (let i = 0; i < qtd; i ++) {
+      const q = this.gerarQuestaoAleatoriaSoma();
+      const indiceCorreta = this.getRandomInt(0, 3);
+      const ex = new Exercicio();
+      ex.respostas[indiceCorreta] = q.resultado + '';
+      let ind = 0;
+      while (ind < 3) {
+        if (ex.respostas[ind]) {
+          ind++;
+        } else {
+          _.find ???
+        }
+      }
 
-      const indiceCorreta = this.generateRandom(0, 3);
-      const respostas: string[] = [];
-      respostas[indiceCorreta] = (a + b) + '';
-      const ex: IExercicio = {
-        enunciado: a + ' + ' + b,
-        respostas: [],
-        indiceRespostaCorreta: indiceCorreta
-      };
       ret.push(ex);
     }
     return ret;
   }
 
-  generateRandomSumQuestion() {
-    const a = this.generateRandom(0, 10);
-    const b = this.generateRandom(0, 10);
+  gerarQuestaoAleatoriaSoma(): IQuestaoSimples {
+    const a = this.getRandomInt(0, 10);
+    const b = this.getRandomInt(0, 10);
     return {
-      parcela1: a,
-      parcela2: b,
-      resposta: a + b
+      operacao: '+',
+      parcelas: [a, b],
+      resultado: a + b
     };
   }
 
-  generateRandom(min: number, max: number): number {
-    return parseInt(((Math.random() * 10) + 1) + '', 10);
+  getRandomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
