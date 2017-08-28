@@ -1,0 +1,5 @@
+ Enunciado: <span>{{enunciado}}</span>
+<hr>
+<div *ngFor="let resposta of respostas">
+  <a (click)="selecionarResposta(resposta)" class="btn btn-primary">{{resposta}}</a>
+</div>

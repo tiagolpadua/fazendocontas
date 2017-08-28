@@ -35,3 +35,6 @@ heroku login
 heroku git:remote -a fazendocontas
 ng build
 git push heroku master
+
+
+https://medium.com/letsboot/angular-4-and-testing-angular-cli-gitlab-ci-ng-test-phantomjs-tdd-afc20f50b928

@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { FcExercicioComponent } from './fc-exercicio.component';
+
+describe('FcExercicioComponent', () => {
+  let component: FcExercicioComponent;
+  let fixture: ComponentFixture<FcExercicioComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ FcExercicioComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FcExercicioComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+  });
+});

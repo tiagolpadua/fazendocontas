@@ -3,7 +3,8 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import { Ano } from '../models/ano';
+import { Ano, TipoQuestao } from '../fc-models/fc-data-models';
+import { FcDataService } from '../fc-services/fc-data.services';
 
 @Component({
   selector: 'app-fc-home',
@@ -11,26 +12,34 @@ import { Ano } from '../models/ano';
   styleUrls: ['./fc-home.component.css']
 })
 export class FcHomeComponent implements OnInit {
-  anos: Ano[];
+  anos: Ano[] = [];
+  tiposQuestoes: TipoQuestao[] = [];
 
-  constructor(private http: Http) {
-    this.getAnos()
-      .then(anos => {
-        this.anos = anos;
-        console.log(this.anos.length);
+  constructor(
+    private http: Http,
+    private fcDataService: FcDataService) {}
+
+  ngOnInit() {
+    const p1 = this.fcDataService.getTiposQuestoes()
+      .then(tiposQuestoes => {
+        this.tiposQuestoes = tiposQuestoes;
+        console.log('Completa tipos');
       })
       .catch(err => {
         window.alert(err);
       });
-  }
 
-  getAnos(): Promise<Ano[]> {
-    return this.http.get('/assets/api/anos.json')
-      .map((res: Response) => res.json())
-      .toPromise();
-  }
+    const p2 = this.fcDataService.getAnos()
+      .then(anos => {
+        this.anos = anos;
+        console.log('Completa anos');
+      })
+      .catch(err => {
+        window.alert(err);
+      });
 
-  ngOnInit() {
+    Observable.forkJoin([p1, p2]).subscribe(t => {
+      console.log('ambas completas');
+    });
   }
-
 }

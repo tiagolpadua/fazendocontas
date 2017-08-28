@@ -8,10 +8,12 @@ import { FcHeaderComponent } from './fc-header/fc-header.component';
 import { FcFooterComponent } from './fc-footer/fc-footer.component';
 import { FcSelecaoAnoComponent } from './fc-selecao-ano/fc-selecao-ano.component';
 import { FcNavigationComponent } from './fc-navigation/fc-navigation.component';
-import { FcSelecaoCategoriasComponent } from './fc-selecao-categorias/fc-selecao-categorias.component';
 import { FcHomeComponent } from './fc-home/fc-home.component';
+import { FcDataService } from './fc-services/fc-data.services';
 
 import { routing } from './app.routes';
+import { FcSelecaoTipoComponent } from './fc-selecao-tipo/fc-selecao-tipo.component';
+import { FcExercicioComponent } from './fc-exercicio/fc-exercicio.component';
 
 @NgModule({
   declarations: [
@@ -20,15 +22,16 @@ import { routing } from './app.routes';
     FcFooterComponent,
     FcSelecaoAnoComponent,
     FcNavigationComponent,
-    FcSelecaoCategoriasComponent,
-    FcHomeComponent
+    FcHomeComponent,
+    FcSelecaoTipoComponent,
+    FcExercicioComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     routing
   ],
-  providers: [],
+  providers: [FcDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
