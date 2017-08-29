@@ -1,16 +1,12 @@
 <!--
 <fc-navigation></fc-navigation>
 -->
+<fc-header></fc-header>
 
-<div class="container">
-    <fc-header></fc-header>
-
-    <div class="row text-center">
-      <div *ngFor="let ano of anos">
-        <fc-selecao-ano [ano]="ano"></fc-selecao-ano>
-      </div>
-    </div>
-
+<div class="row text-center">
+  <div *ngFor="let ano of anos">
+    <fc-selecao-ano [ano]="ano"></fc-selecao-ano>
   </div>
+</div>
 
-  <fc-footer></fc-footer>
+<fc-footer></fc-footer>

@@ -38,3 +38,5 @@ git push heroku master
 
 
 https://medium.com/letsboot/angular-4-and-testing-angular-cli-gitlab-ci-ng-test-phantomjs-tdd-afc20f50b928
+
+http://valor-software.com/ngx-bootstrap/#/

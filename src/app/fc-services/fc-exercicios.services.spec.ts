@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Exercicio, QuestaoSimples } from '../fc-models/fc-data.models';
 import { FCExerciciosService } from './fc-exercicios.services';
+import * as _ from 'underscore';
 
 describe('FCService', () => {
   let service: FCExerciciosService;
@@ -17,7 +18,7 @@ describe('FCService', () => {
     for (let i = 0; i < 4; i += 1) {
       const min = arrmin[i];
       const max = arrmax[i];
-      const q = service.gerarQuestaoAleatoriaSoma(min, max);
+      const q = service.gerarQuestaoAleatoriaSoma(min, max, 2);
       // console.log(JSON.stringify(q));
       expect(q.operacao).toBe('+');
       expect(q.parcelas.length).toBe(2);
@@ -29,6 +30,24 @@ describe('FCService', () => {
     }
   });
 
+  it('deve gerar corretamente questões aleatórias de subtração entre um valor mínimo e um máximo', () => {
+    const arrmin = [0, 3, 100, 1000];
+    const arrmax = [10, 100, 500, 10000];
+
+    for (let i = 0; i < 4; i += 1) {
+      const min = arrmin[i];
+      const max = arrmax[i];
+      const q = service.gerarQuestaoAleatoriaSubtracao(min, max);
+      expect(q.operacao).toBe('-');
+      expect(q.parcelas.length).toBe(2);
+      expect(q.parcelas[0]).toBeGreaterThanOrEqual(min);
+      expect(q.parcelas[0]).toBeLessThanOrEqual(max);
+      expect(q.parcelas[1]).toBeGreaterThanOrEqual(min);
+      expect(q.parcelas[1]).toBeLessThanOrEqual(max);
+      expect(q.parcelas[0] - q.parcelas[1]).toBe(q.resultado);
+    }
+  });
+
   it('deve retornar um número aleatório entre um mínimo e um máximo', () => {
     const arrmin = [0, 3, 100, 1000];
     const arrmax = [10, 100, 500, 10000];
@@ -36,7 +55,7 @@ describe('FCService', () => {
     for (let i = 0; i < 4; i += 1) {
       const min = arrmin[i];
       const max = arrmax[i];
-      const rand = service.getRandomInt(min, max);
+      const rand = _.random(min, max);
       expect(rand).toBeGreaterThanOrEqual(min);
       expect(rand).toBeLessThanOrEqual(max);
     }
@@ -60,7 +79,7 @@ describe('FCService', () => {
     ex.respostas = [];
     ex.respostas[3] = '10';
 
-    const curry = () => service.gerarQuestaoAleatoriaSoma(0, 10).resultado + '';
+    const curry = () => service.gerarQuestaoAleatoriaSoma(0, 10, 2).resultado + '';
     service.popularRespostasAleatorias(ex, curry, 4);
     expect(ex.respostas.length).toBe(4);
 
@@ -71,6 +90,16 @@ describe('FCService', () => {
 
   it('deve gerar corretamente exercícios de soma até 10', () => {
     const exercicios = service.gerarExerciciosSomaAte10(5);
+    exercicios.forEach(ex => {
+      expect(ex.enunciado.length).toBeGreaterThan(0);
+      expect(ex.respostas.length).toBe(4);
+      expect(ex.indiceRespostaCorreta).toBeGreaterThanOrEqual(0);
+      expect(ex.indiceRespostaCorreta).toBeLessThanOrEqual(3);
+    });
+  });
+
+  it('deve gerar corretamente exercícios de subtracao até 10', () => {
+    const exercicios = service.gerarExerciciosSubtracaoAte10(5);
     exercicios.forEach(ex => {
       expect(ex.enunciado.length).toBeGreaterThan(0);
       expect(ex.respostas.length).toBe(4);
@@ -118,7 +147,9 @@ describe('FCService', () => {
   });
 
   it('deve gerar corretamente exercícios a partir das funções geradoras', () => {
-    const exs = service.gerarExercicios(10, 4, () => service.gerarQuestaoAleatoriaSoma(1, 10), service.gerarEnunciadoQuestaoSimplesInline);
+    const exs = service.gerarExercicios(10, 4, () =>
+      service.gerarQuestaoAleatoriaSoma(1, 10, 2), service.gerarEnunciadoQuestaoSimplesInline);
+
     expect(exs.length).toBe(10);
     exs.forEach(e => {
       expect(e.enunciado.length).toBeGreaterThan(0);

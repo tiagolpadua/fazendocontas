@@ -15,8 +15,9 @@ export class FcExercicioComponent implements OnInit {
   tipoQuestao: TipoQuestao;
   exercicios: Exercicio[];
   indiceExercicioAtual: number;
-  pontos = 0;
+  pontos: number;
   qtdExercicios = 10;
+  alerta: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,19 +40,35 @@ export class FcExercicioComponent implements OnInit {
           window.alert(msg);
           throw msg;
         }
-        this.exercicios = this.fcExerciciosService.gerarExerciciosSomaAte10(this.qtdExercicios);
-        this.indiceExercicioAtual = 0;
+        this.gerarExercicios();
       });
   }
 
   selecionarResposta(index: number) {
+    this.alerta = false;
     if (index === this.exercicios[this.indiceExercicioAtual].indiceRespostaCorreta) {
       this.pontos += 1;
-    }
-
-    if (this.indiceExercicioAtual < this.qtdExercicios - 1) {
-      this.indiceExercicioAtual++;
+      this.indiceExercicioAtual += 1;
+    } else {
+      this.refazer();
     }
   }
 
+  refazer() {
+    this.alerta = true;
+    setTimeout(() => {
+      this.alerta = false;
+    }, 5000);
+    this.gerarExercicios();
+  }
+
+  private gerarExercicios() {
+    this.pontos = 0;
+    this.indiceExercicioAtual = 0;
+    this.exercicios = this.fcExerciciosService.gerarExerciciosSomaAte10(this.qtdExercicios);
+  }
+
+  getPercentualCompleto() {
+    return (this.indiceExercicioAtual / this.qtdExercicios) * 100;
+  }
 }

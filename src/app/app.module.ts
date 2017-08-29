@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// ngx-bootstrap
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { AlertModule } from 'ngx-bootstrap/alert';
+
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -13,7 +17,6 @@ import { FcDataService } from './fc-services/fc-data.services';
 import { FCExerciciosService } from './fc-services/fc-exercicios.services';
 
 import { routing } from './app.routes';
-import { FcSelecaoTipoComponent } from './fc-selecao-tipo/fc-selecao-tipo.component';
 import { FcExercicioComponent } from './fc-exercicio/fc-exercicio.component';
 
 @NgModule({
@@ -24,10 +27,11 @@ import { FcExercicioComponent } from './fc-exercicio/fc-exercicio.component';
     FcSelecaoAnoComponent,
     FcNavigationComponent,
     FcHomeComponent,
-    FcSelecaoTipoComponent,
     FcExercicioComponent
   ],
   imports: [
+    AlertModule.forRoot(),
+    ProgressbarModule.forRoot(),
     BrowserModule,
     HttpModule,
     routing

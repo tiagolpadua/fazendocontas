@@ -1,18 +1,33 @@
+<alert type="danger" *ngIf="alerta">
+  <strong>Que chato, você errou...</strong> Vamos tentar novamente?
+</alert>
 <div *ngIf="exercicios;else carregando">
-  <span>{{tipoQuestao.descricao}}</span>
-  <hr>
-
-  <div *ngIf="indiceExercicioAtual < qtdExercicios - 1">
-    <span>Exercício {{indiceExercicioAtual + 1}} de {{qtdExercicios}}</span>
-    <hr>
-    <span>{{exercicios[indiceExercicioAtual].enunciado}}</span>
-    <hr>
-    <div *ngFor="let resposta of exercicios[indiceExercicioAtual].respostas; let i = index">
-      <a (click)="selecionarResposta(i)" class="btn btn-primary">{{resposta}}</a>
+  <header class="jumbotron my-4">
+    <h2 class="display-3">{{tipoQuestao.descricao}}</h2>
+    <!-- <h3 class="display-3">Pontos: {{pontos}}</h3> -->
+    <div *ngIf="indiceExercicioAtual < qtdExercicios">
+      <p>
+        <progressbar value="{{getPercentualCompleto()}}"></progressbar>
+      </p>
+      <h1 class="display-3" style="text-align: center;">{{exercicios[indiceExercicioAtual].enunciado}}</h1>
     </div>
+  </header>
+  <div *ngIf="indiceExercicioAtual < qtdExercicios" class="row">
+    <p *ngFor="let resposta of exercicios[indiceExercicioAtual].respostas; let i = index" class="col-md-6 mb-8">
+      <!-- <a (click)="selecionarResposta(i)" class="btn btn-primary btn-large btn-block">{{resposta}}</a> -->
+      <a (click)="selecionarResposta(i)" class="btn btn-primary btn-lg btn-block">{{resposta}}</a>
+    </p>
+  </div>
+  <div *ngIf="indiceExercicioAtual >= qtdExercicios" class="row">
+    <alert type="success">
+      <h4 class="alert-heading">Parabéns!</h4>
+      <p>Você conseguiu concluir a série de exercícios sem nenhum erro!</p>
+    </alert>
+    <p class="col-md-6 mb-8">
+      <a (click)="refazer()" class="btn btn-primary">Refazer</a>
+      <a [routerLink]="['/home']" class="btn btn-info">Início</a>
+    </p>
   </div>
 </div>
-<hr>
-<span>Pontos: {{pontos}}</span>
 
 <ng-template #carregando>Carregando...</ng-template>

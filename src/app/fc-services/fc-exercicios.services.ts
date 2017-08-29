@@ -7,9 +7,16 @@ type IGeradorEnunciado = (questao: QuestaoSimples) => string;
 
 export class FCExerciciosService {
   // tested
+  gerarExerciciosSubtracaoAte10(qtd: number): Exercicio[] {
+    return this.gerarExercicios(10, 4,
+      () => this.gerarQuestaoAleatoriaSubtracao(1, 10),
+      this.gerarEnunciadoQuestaoSimplesInline);
+  }
+
+  // tested
   gerarExerciciosSomaAte10(qtd: number): Exercicio[] {
     return this.gerarExercicios(10, 4,
-      () => this.gerarQuestaoAleatoriaSoma(1, 10),
+      () => this.gerarQuestaoAleatoriaSoma(1, 10, 2),
       this.gerarEnunciadoQuestaoSimplesInline);
   }
 
@@ -21,7 +28,7 @@ export class FCExerciciosService {
     const ret: Exercicio[] = [];
     for (let i = 0; i < qtdExercicios; i ++) {
       const q = geradorQuestao();
-      const indiceCorreta = this.getRandomInt(0, 3);
+      const indiceCorreta = _.random(0, 3);
       const ex = new Exercicio();
       ex.enunciado = geradorEnunciado(q);
       ex.respostas = [];
@@ -57,19 +64,30 @@ export class FCExerciciosService {
   }
 
   // tested
-  gerarQuestaoAleatoriaSoma(min: number, max: number): QuestaoSimples {
-    const a = this.getRandomInt(min, max);
-    const b = this.getRandomInt(min, max);
+  gerarQuestaoAleatoriaSoma(min: number, max: number, qtdParcelas: number): QuestaoSimples {
+    const p: number[] = [];
+    _.times(qtdParcelas, () => {
+      p.push(_.random(min, max));
+    });
+
     return {
       operacao: '+',
-      parcelas: [a, b],
-      resultado: a + b
+      parcelas: p,
+      resultado: _.reduce(p, (memo, num) => {
+        return memo + num;
+      }, 0)
     };
   }
 
   // tested
-  getRandomInt(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  gerarQuestaoAleatoriaSubtracao(min: number, max: number): QuestaoSimples {
+    const a = _.random(min, max);
+    const b = _.random(min, a);
+    return {
+      operacao: '-',
+      parcelas: [a, b],
+      resultado: a - b
+    };
   }
 
   // tested
