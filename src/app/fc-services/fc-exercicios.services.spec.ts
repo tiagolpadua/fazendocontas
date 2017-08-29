@@ -1,12 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FCService, Exercicio, IQuestaoSimples } from './fc-exercicios-services';
+import { Exercicio, QuestaoSimples } from '../fc-models/fc-data.models';
+import { FCExerciciosService } from './fc-exercicios.services';
 
 describe('FCService', () => {
-  let service: FCService;
+  let service: FCExerciciosService;
 
   beforeEach(() => {
-    service = new FCService();
+    service = new FCExerciciosService();
   });
 
   it('deve gerar corretamente questões aleatórias de soma entre um valor mínimo e um máximo', () => {
@@ -79,31 +80,31 @@ describe('FCService', () => {
   });
 
   it('deve gerar corretamente enunciados para questões simples', () => {
-    const questao1: IQuestaoSimples = {
+    const questao1: QuestaoSimples = {
       operacao: '+',
       parcelas: [1, 3],
       resultado: 4
     };
 
-    const questao2: IQuestaoSimples = {
+    const questao2: QuestaoSimples = {
       operacao: '+',
       parcelas: [4, 5, 6],
       resultado: 15
     };
 
-    const questao3: IQuestaoSimples = {
+    const questao3: QuestaoSimples = {
       operacao: '-',
       parcelas: [3, 1],
       resultado: 2
     };
 
-    const questao4: IQuestaoSimples = {
+    const questao4: QuestaoSimples = {
       operacao: '*',
       parcelas: [3, 4],
       resultado: 12
     };
 
-    const questao5: IQuestaoSimples = {
+    const questao5: QuestaoSimples = {
       operacao: '/',
       parcelas: [4, 2],
       resultado: 2

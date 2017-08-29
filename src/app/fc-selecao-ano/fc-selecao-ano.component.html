@@ -8,8 +8,8 @@
       <p class="card-text">{{ano.descricao}}</p>
     </div>
     <div class="card-footer">
-      <div *ngFor="let tipoQuestao of ano.tiposQuestoes">
-        <a (click)="selecionarTipo(tipoQuestao)" class="btn btn-primary">{{tipoQuestao.descricao}}</a>
+      <div *ngFor="let tipoQuestao of tiposQuestoes">
+        <a (click)="selecionarTipoQuestao(tipoQuestao)" class="btn btn-primary">{{tipoQuestao.descricao}}</a>
       </div>
     </div>
   </div>

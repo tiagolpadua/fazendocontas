@@ -1,21 +1,11 @@
 import * as _ from 'underscore';
 
-export class Exercicio {
-  enunciado: string;
-  respostas: string[];
-  indiceRespostaCorreta: number;
-}
+import { Exercicio, QuestaoSimples } from '../fc-models/fc-data.models';
 
-export interface IQuestaoSimples {
-  operacao: string;
-  parcelas: number[];
-  resultado: number;
-}
+type IGeradorQuestao = () => QuestaoSimples;
+type IGeradorEnunciado = (questao: QuestaoSimples) => string;
 
-type IGeradorQuestao = () => IQuestaoSimples;
-type IGeradorEnunciado = (questao: IQuestaoSimples) => string;
-
-export class FCService {
+export class FCExerciciosService {
   // tested
   gerarExerciciosSomaAte10(qtd: number): Exercicio[] {
     return this.gerarExercicios(10, 4,
@@ -44,7 +34,7 @@ export class FCService {
   }
 
   // tested
-  gerarEnunciadoQuestaoSimplesInline(questao: IQuestaoSimples): string {
+  gerarEnunciadoQuestaoSimplesInline(questao: QuestaoSimples): string {
     return questao.parcelas.join(questao.operacao);
   }
 
@@ -67,7 +57,7 @@ export class FCService {
   }
 
   // tested
-  gerarQuestaoAleatoriaSoma(min: number, max: number): IQuestaoSimples {
+  gerarQuestaoAleatoriaSoma(min: number, max: number): QuestaoSimples {
     const a = this.getRandomInt(min, max);
     const b = this.getRandomInt(min, max);
     return {

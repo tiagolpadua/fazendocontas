@@ -2,7 +2,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import { Ano, TipoQuestao } from '../fc-models/fc-data-models';
+import { Ano, TipoQuestao } from '../fc-models/fc-data.models';
 import { Injectable } from '@angular/core';
 
 @Injectable()

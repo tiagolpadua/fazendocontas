@@ -10,6 +10,7 @@ import { FcSelecaoAnoComponent } from './fc-selecao-ano/fc-selecao-ano.component
 import { FcNavigationComponent } from './fc-navigation/fc-navigation.component';
 import { FcHomeComponent } from './fc-home/fc-home.component';
 import { FcDataService } from './fc-services/fc-data.services';
+import { FCExerciciosService } from './fc-services/fc-exercicios.services';
 
 import { routing } from './app.routes';
 import { FcSelecaoTipoComponent } from './fc-selecao-tipo/fc-selecao-tipo.component';
@@ -31,7 +32,7 @@ import { FcExercicioComponent } from './fc-exercicio/fc-exercicio.component';
     HttpModule,
     routing
   ],
-  providers: [FcDataService],
+  providers: [FcDataService, FCExerciciosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
