@@ -50,16 +50,12 @@ export class FcExercicioComponent implements OnInit {
       this.pontos += 1;
       this.indiceExercicioAtual += 1;
     } else {
-      this.refazer();
+      this.alerta = true;
+      setTimeout(() => {
+        this.alerta = false;
+      }, 5000);
+      this.gerarExercicios();
     }
-  }
-
-  refazer() {
-    this.alerta = true;
-    setTimeout(() => {
-      this.alerta = false;
-    }, 5000);
-    this.gerarExercicios();
   }
 
   private gerarExercicios() {
