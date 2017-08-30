@@ -24,7 +24,7 @@ import { FCExerciciosService } from './fc-services/fc-exercicios.services';
 import { routing } from './app.routes';
 import { FcExercicioComponent } from './fc-exercicio/fc-exercicio.component';
 
-class CustomOption extends ToastOptions {
+export class CustomOption extends ToastOptions {
   positionClass = 'toast-top-center';
 }
 
