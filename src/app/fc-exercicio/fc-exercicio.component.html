@@ -1,7 +1,6 @@
 <div *ngIf="exercicios;else carregando">
   <header class="jumbotron my-4">
     <h2 class="display-3">{{tipoQuestao.descricao}}</h2>
-    <!-- <h3 class="display-3">Pontos: {{pontos}}</h3> -->
     <div *ngIf="indiceExercicioAtual < qtdExercicios">
       <p>
         <progressbar value="{{getPercentualCompleto()}}"></progressbar>
@@ -15,9 +14,6 @@
       <a (click)="selecionarResposta(i)" class="btn btn-primary btn-lg btn-block">{{resposta}}</a>
     </p>
   </div>
-  <alert type="danger" *ngIf="alerta">
-    <strong>Que chato, você errou...</strong> Vamos tentar novamente?
-  </alert>
   <div *ngIf="indiceExercicioAtual >= qtdExercicios" class="row">
     <alert type="success">
       <h4 class="alert-heading">Parabéns!</h4>
