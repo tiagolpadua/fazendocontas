@@ -1,17 +1,23 @@
+<a class="navbar-brand" [routerLink]="['/home']">
+  Início
+</a>
 <div *ngIf="exercicios;else carregando">
-  <header class="jumbotron my-4">
-    <h2 class="display-3">{{tipoQuestao.descricao}}</h2>
+  <header class="jumbotron">
+    <h3>{{tipoQuestao.descricao}}</h3>
     <div *ngIf="indiceExercicioAtual < qtdExercicios">
+      <h2 style="text-align: center;">{{exercicios[indiceExercicioAtual].enunciado}}</h2>
       <p>
         <progressbar value="{{getPercentualCompleto()}}"></progressbar>
       </p>
-      <h1 class="display-3" style="text-align: center;">{{exercicios[indiceExercicioAtual].enunciado}}</h1>
     </div>
   </header>
   <div *ngIf="indiceExercicioAtual < qtdExercicios" class="row">
-    <p *ngFor="let resposta of exercicios[indiceExercicioAtual].respostas; let i = index" class="col-md-6 mb-8">
+    <p *ngFor="let resposta of exercicios[indiceExercicioAtual].respostas; let i = index" class="col-md-6">
       <!-- <a (click)="selecionarResposta(i)" class="btn btn-primary btn-large btn-block">{{resposta}}</a> -->
-      <a (click)="selecionarResposta(i)" class="btn btn-primary btn-lg btn-block">{{resposta}}</a>
+      <!-- <a (click)="selecionarResposta(i)" class="btn btn-primary btn-sq btn-lg btn-block">{{resposta}}</a> -->
+      <a (click)="selecionarResposta(i)" class="btn btn-primary btn-sq-lg btn-lg btn-block" style="padding: 60px">
+        {{resposta}}
+      </a>
     </p>
   </div>
   <div *ngIf="indiceExercicioAtual >= qtdExercicios" class="row">

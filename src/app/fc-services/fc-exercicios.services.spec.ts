@@ -11,6 +11,16 @@ describe('FCService', () => {
     service = new FCExerciciosService();
   });
 
+  it('deve gerar corretamente exercicios simples', () => {
+    const exs = service.gerarExerciciosSimples(10, service.gerarQuestaoAleatoriaSubtracao, 0, 10, 2);
+    expect(exs.length).toBe(10);
+  });
+
+  it('deve gerar corretamente exercicios de subtração', () => {
+    const exs = service.gerarExerciciosSubtracao(10, 0, 10, 2);
+    expect(exs.length).toBe(10);
+  });
+
   it('deve gerar corretamente questões aleatórias de soma entre um valor mínimo e um máximo', () => {
     const arrmin = [0, 3, 100, 1000];
     const arrmax = [10, 100, 500, 10000];
@@ -88,8 +98,8 @@ describe('FCService', () => {
     });
   });
 
-  it('deve gerar corretamente exercícios de soma até 10', () => {
-    const exercicios = service.gerarExerciciosSomaAte10(5);
+  it('deve gerar corretamente exercícios de soma', () => {
+    const exercicios = service.gerarExerciciosSoma(10, 0, 10, 2);
     exercicios.forEach(ex => {
       expect(ex.enunciado.length).toBeGreaterThan(0);
       expect(ex.respostas.length).toBe(4);
@@ -100,6 +110,16 @@ describe('FCService', () => {
 
   it('deve gerar corretamente exercícios de subtracao até 10', () => {
     const exercicios = service.gerarExerciciosSubtracaoAte10(5);
+    exercicios.forEach(ex => {
+      expect(ex.enunciado.length).toBeGreaterThan(0);
+      expect(ex.respostas.length).toBe(4);
+      expect(ex.indiceRespostaCorreta).toBeGreaterThanOrEqual(0);
+      expect(ex.indiceRespostaCorreta).toBeLessThanOrEqual(3);
+    });
+  });
+
+  it('deve gerar corretamente exercícios de subtracao até 100', () => {
+    const exercicios = service.gerarExerciciosSubtracaoAte100(5);
     exercicios.forEach(ex => {
       expect(ex.enunciado.length).toBeGreaterThan(0);
       expect(ex.respostas.length).toBe(4);

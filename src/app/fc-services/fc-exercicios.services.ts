@@ -9,6 +9,7 @@ const QTD_RESPOSTAS_BASE = 4;
 
 export class FCExerciciosService {
 
+  // tested
   gerarExerciciosSimples(qtd: number, funcaoGeradora: (min: number, max: number, qtdParcelas: number) => QuestaoSimples,
     min: number, max: number, qtdParcelas: number): Exercicio[] {
     return this.gerarExercicios(qtd, QTD_RESPOSTAS_BASE,
@@ -16,8 +17,32 @@ export class FCExerciciosService {
       this.gerarEnunciadoQuestaoSimplesInline);
   }
 
+  // tested
   gerarExerciciosSubtracao(qtd: number, min: number, max: number, qtdParcelas: number): Exercicio[] {
     return this.gerarExerciciosSimples(qtd, this.gerarQuestaoAleatoriaSubtracao, min, max, qtdParcelas);
+  }
+
+  // gerarExerciciosTabuada2(qtd: number): Exercicio[] {
+  //   return this.gerarExerciciosTabuada(qtd, 2, 0, 9);
+  // }
+
+  gerarExerciciosTabuada(qtd: number, base: number, min: number, max: number) {
+
+  }
+
+  gerarQuestaoTabuadaComBase(base: number, min: number, max: number): QuestaoSimples {
+    const posicaoBase = _.random(0, 1);
+    const posicaoFator = posicaoBase === 0 ? 1 : 0;
+
+    const p: number[] = [];
+    p[posicaoBase] = base;
+    p[posicaoFator] = _.random(min, max);
+
+    return {
+      operacao: '*',
+      parcelas: p,
+      resultado: p[0] * p[1]
+    };
   }
 
   // tested
@@ -25,6 +50,7 @@ export class FCExerciciosService {
     return this.gerarExerciciosSubtracao(qtd, 1, 10, 2);
   }
 
+  // tested
   gerarExerciciosSubtracaoAte100(qtd: number): Exercicio[] {
     return this.gerarExerciciosSubtracao(qtd, 10, 100, 2);
   }
