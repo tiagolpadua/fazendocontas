@@ -5,19 +5,41 @@ import { Exercicio, QuestaoSimples } from '../fc-models/fc-data.models';
 type IGeradorQuestao = () => QuestaoSimples;
 type IGeradorEnunciado = (questao: QuestaoSimples) => string;
 
+const QTD_RESPOSTAS_BASE = 4;
+
 export class FCExerciciosService {
+
+  gerarExerciciosSimples(qtd: number, funcaoGeradora: (min: number, max: number, qtdParcelas: number) => QuestaoSimples,
+    min: number, max: number, qtdParcelas: number): Exercicio[] {
+    return this.gerarExercicios(qtd, QTD_RESPOSTAS_BASE,
+      () => funcaoGeradora(min, max, qtdParcelas),
+      this.gerarEnunciadoQuestaoSimplesInline);
+  }
+
+  gerarExerciciosSubtracao(qtd: number, min: number, max: number, qtdParcelas: number): Exercicio[] {
+    return this.gerarExerciciosSimples(qtd, this.gerarQuestaoAleatoriaSubtracao, min, max, qtdParcelas);
+  }
+
   // tested
   gerarExerciciosSubtracaoAte10(qtd: number): Exercicio[] {
-    return this.gerarExercicios(10, 4,
-      () => this.gerarQuestaoAleatoriaSubtracao(1, 10),
-      this.gerarEnunciadoQuestaoSimplesInline);
+    return this.gerarExerciciosSubtracao(qtd, 1, 10, 2);
+  }
+
+  gerarExerciciosSubtracaoAte100(qtd: number): Exercicio[] {
+    return this.gerarExerciciosSubtracao(qtd, 10, 100, 2);
+  }
+
+  gerarExerciciosSoma(qtd: number, min: number, max: number, qtdParcelas: number): Exercicio[] {
+    return this.gerarExerciciosSimples(qtd, this.gerarQuestaoAleatoriaSoma, min, max, qtdParcelas);
   }
 
   // tested
   gerarExerciciosSomaAte10(qtd: number): Exercicio[] {
-    return this.gerarExercicios(10, 4,
-      () => this.gerarQuestaoAleatoriaSoma(1, 10, 2),
-      this.gerarEnunciadoQuestaoSimplesInline);
+    return this.gerarExerciciosSoma(qtd, 1, 10, 2);
+  }
+
+  gerarExerciciosSomaAte100(qtd: number): Exercicio[] {
+    return this.gerarExerciciosSoma(qtd, 10, 100, 2);
   }
 
   // tested
@@ -26,15 +48,20 @@ export class FCExerciciosService {
     geradorQuestao: IGeradorQuestao,
     geradorEnunciado: IGeradorEnunciado): Exercicio[] {
     const ret: Exercicio[] = [];
-    for (let i = 0; i < qtdExercicios; i ++) {
-      const q = geradorQuestao();
-      const indiceCorreta = _.random(0, 3);
-      const ex = new Exercicio();
-      ex.enunciado = geradorEnunciado(q);
-      ex.respostas = [];
-      ex.indiceRespostaCorreta = indiceCorreta;
-      ex.respostas[indiceCorreta] = q.resultado + '';
-      this.popularRespostasAleatorias(ex, () => geradorQuestao().resultado + '', qtdRespostas);
+    for (let i = 0; i < qtdExercicios; i++) {
+      let ex: Exercicio;
+      do {
+        const q = geradorQuestao();
+        const indiceCorreta = _.random(0, 3);
+        ex = new Exercicio();
+        ex.enunciado = geradorEnunciado(q);
+        ex.respostas = [];
+        ex.indiceRespostaCorreta = indiceCorreta;
+        ex.respostas[indiceCorreta] = q.resultado + '';
+        this.popularRespostasAleatorias(ex, () => geradorQuestao().resultado + '', qtdRespostas);
+
+      // Bloqueia a inclusão de exercícios repetidos
+      } while (_.find(ret, e => e.enunciado === ex.enunciado));
       ret.push(ex);
     }
     return ret;
@@ -80,13 +107,26 @@ export class FCExerciciosService {
   }
 
   // tested
-  gerarQuestaoAleatoriaSubtracao(min: number, max: number): QuestaoSimples {
-    const a = _.random(min, max);
-    const b = _.random(min, a);
+  gerarQuestaoAleatoriaSubtracao(min: number, max: number, qtdParcelas: number): QuestaoSimples {
+    const p: number[] = [];
+    let memo: number;
+    _.times(qtdParcelas, () => {
+      if (memo === undefined) {
+        memo = _.random(min, max);
+        p.push(memo);
+      } else {
+        const value = _.random(min, memo);
+        p.push(value);
+        memo -= value;
+      }
+    });
+
     return {
       operacao: '-',
-      parcelas: [a, b],
-      resultado: a - b
+      parcelas: p,
+      resultado: _.reduce(p.slice(1), (m, num) => {
+        return m - num;
+      }, p[0])
     };
   }
 

@@ -37,7 +37,7 @@ describe('FCService', () => {
     for (let i = 0; i < 4; i += 1) {
       const min = arrmin[i];
       const max = arrmax[i];
-      const q = service.gerarQuestaoAleatoriaSubtracao(min, max);
+      const q = service.gerarQuestaoAleatoriaSubtracao(min, max, 2);
       expect(q.operacao).toBe('-');
       expect(q.parcelas.length).toBe(2);
       expect(q.parcelas[0]).toBeGreaterThanOrEqual(min);

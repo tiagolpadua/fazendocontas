@@ -18,6 +18,7 @@ export class FcExercicioComponent implements OnInit {
   pontos: number;
   qtdExercicios = 10;
   alerta: boolean;
+  funcaoGeradora: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +41,13 @@ export class FcExercicioComponent implements OnInit {
           window.alert(msg);
           throw msg;
         }
+
+        if (!this.fcExerciciosService[this.tipoQuestao.funcao]) {
+          const msg = `Função geradora não localizada para o tipo de questão: ${idTipoQuestao} - ${this.tipoQuestao.funcao}.}`;
+          window.alert(msg);
+          throw msg;
+        }
+
         this.gerarExercicios();
       });
   }
@@ -61,7 +69,7 @@ export class FcExercicioComponent implements OnInit {
   private gerarExercicios() {
     this.pontos = 0;
     this.indiceExercicioAtual = 0;
-    this.exercicios = this.fcExerciciosService.gerarExerciciosSomaAte10(this.qtdExercicios);
+    this.exercicios = this.fcExerciciosService[this.tipoQuestao.funcao](this.qtdExercicios);
   }
 
   getPercentualCompleto() {

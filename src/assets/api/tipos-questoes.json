@@ -1,21 +1,21 @@
 [{
     "_id": "0",
     "descricao": "Soma simples de números até 10",
-    "funcao": "somaSimplesAte10"
+    "funcao": "gerarExerciciosSomaAte10"
   },
   {
     "_id": "1",
     "descricao": "Subtração simples de números até 10",
-    "funcao": "subtracaoSimplesAte10"
+    "funcao": "gerarExerciciosSubtracaoAte10"
   },
   {
     "_id": "2",
     "descricao": "Soma simples de números até 100",
-    "funcao": "somaSimplesAte1000"
+    "funcao": "gerarExerciciosSomaAte100"
   },
   {
     "_id": "3",
     "descricao": "Subtração simples de números até 100",
-    "funcao": "subtracaoSimplesAte100"
+    "funcao": "gerarExerciciosSubtracaoAte100"
   }
 ]
