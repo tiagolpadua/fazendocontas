@@ -40,3 +40,10 @@ git push heroku master
 https://medium.com/letsboot/angular-4-and-testing-angular-cli-gitlab-ci-ng-test-phantomjs-tdd-afc20f50b928
 
 http://valor-software.com/ngx-bootstrap/#/
+
+
+List assets
+find . -type f -printf "%T@ %p\n" | cut -d\  -f2-
+
+
+https://blog.thoughtram.io/angular/2016/11/28/testing-services-with-http-in-angular-2.html

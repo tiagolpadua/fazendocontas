@@ -37,7 +37,7 @@ export class FcExercicioComponent implements OnInit {
       throw msg;
     }
     this.fcDataService.getTiposQuestoes()
-      .then(tqs => {
+      .subscribe(tqs => {
         this.tipoQuestao = tqs.find(tq => tq._id === idTipoQuestao);
         if (!this.tipoQuestao) {
           const msg = `Tipo de questão não localizado para id informado: ${idTipoQuestao}`;

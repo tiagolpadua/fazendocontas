@@ -17,14 +17,13 @@ export class FcHomeComponent implements OnInit {
 
   constructor(
     private http: Http,
-    private fcDataService: FcDataService) {}
+    private fcDataService: FcDataService) { }
 
   ngOnInit() {
     this.fcDataService.getAnos()
-      .then(anos => {
+      .subscribe(anos => {
         this.anos = anos;
-      })
-      .catch(err => {
+      }, err => {
         window.alert(err);
       });
   }

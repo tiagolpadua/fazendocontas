@@ -10,12 +10,26 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <!-- https://www.bootstrapcdn.com/ -->
-  <script src="/assets/vendor/jquery-3.2.1.min.js"></script>
-  <link href="/assets/vendor/bootstrap.min.css" rel="stylesheet">
-  <script src="/assets/vendor/bootstrap.min.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> -->
   <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+  <!-- https://console.firebase.google.com -->
+  <!-- https://firebase.google.com/docs/web/setup -->
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDq2ll0XynIzyIXhm1VOTVcHbrmtK7Di_4",
+      authDomain: "fazendocontas-aa396.firebaseapp.com",
+      databaseURL: "https://fazendocontas-aa396.firebaseio.com",
+      projectId: "fazendocontas-aa396",
+      storageBucket: "",
+      messagingSenderId: "290811124634"
+    };
+    firebase.initializeApp(config);
+
+  </script>
 
   <!-- Google AdSense: https://www.google.com/adsense/ -->
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

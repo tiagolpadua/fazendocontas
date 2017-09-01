@@ -1,16 +1,64 @@
 import * as _ from 'underscore';
 
-import { Exercicio, QuestaoSimples } from '../fc-models/fc-data.models';
+import { Injectable } from '@angular/core';
+import { Enunciado, ETipoEnunciado, Exercicio, QuestaoSimples } from '../fc-models/fc-data.models';
+import { FcDataService } from '../fc-services/fc-data.services';
 
 type IGeradorQuestao = () => QuestaoSimples;
-type IGeradorEnunciado = (questao: QuestaoSimples) => string;
+type IGeradorEnunciado = (questao: QuestaoSimples) => Enunciado;
+type IFuncaoGeradora = (min: number, max: number, qtdParcelas: number) => QuestaoSimples;
 
 const QTD_RESPOSTAS_BASE = 4;
 
+@Injectable()
 export class FCExerciciosService {
 
+  constructor(
+    private fcDataService: FcDataService
+  ) { }
+
   // tested
-  gerarExerciciosSimples(qtd: number, funcaoGeradora: (min: number, max: number, qtdParcelas: number) => QuestaoSimples,
+  gerarExerciciosContagemImagensAte10(qtd: number): Promise<Exercicio[]> {
+    return new Promise((resolve, reject) => {
+      this.fcDataService.getImagens()
+        .subscribe(images => {
+          resolve(this.gerarExerciciosContagemImagens(qtd, images, 1, 10));
+        },
+        err => window.alert(err));
+    });
+  }
+
+  // tested
+  gerarExerciciosContagemImagens(qtd: number, imgs: string[], min: number, max: number): Exercicio[] {
+    const exs: Exercicio[] = [];
+    _.times(qtd, () => {
+      const n = _.random(min, max);
+      const img = imgs[_.random(0, imgs.length - 1)];
+      const e = new Exercicio();
+      e.enunciado = {
+        tipo: ETipoEnunciado.LISTA_DE_IMAGENS,
+        conteudo: img
+      };
+      e.indiceRespostaCorreta = _.random(0, QTD_RESPOSTAS_BASE - 1);
+      e.respostas = [];
+      e.respostas[e.indiceRespostaCorreta] = n + '';
+
+      _.times(4, (i) => {
+        if (e.respostas[i] === undefined) {
+          let res: string;
+          do {
+            res = _.random(min, max) + '';
+          } while (e.respostas.indexOf(res) !== -1);
+          e.respostas[i] = res;
+        }
+      });
+      exs.push(e);
+    });
+    return exs;
+  }
+
+  // tested
+  gerarExerciciosSimples(qtd: number, funcaoGeradora: IFuncaoGeradora,
     min: number, max: number, qtdParcelas: number): Exercicio[] {
     return this.gerarExercicios(qtd, QTD_RESPOSTAS_BASE,
       () => funcaoGeradora(min, max, qtdParcelas),
@@ -26,9 +74,9 @@ export class FCExerciciosService {
   //   return this.gerarExerciciosTabuada(qtd, 2, 0, 9);
   // }
 
-  gerarExerciciosTabuada(qtd: number, base: number, min: number, max: number) {
+  // gerarExerciciosTabuada(qtd: number, base: number, min: number, max: number) {
 
-  }
+  // }
 
   gerarQuestaoTabuadaComBase(base: number, min: number, max: number): QuestaoSimples {
     const posicaoBase = _.random(0, 1);
@@ -86,7 +134,7 @@ export class FCExerciciosService {
         ex.respostas[indiceCorreta] = q.resultado + '';
         this.popularRespostasAleatorias(ex, () => geradorQuestao().resultado + '', qtdRespostas);
 
-      // Bloqueia a inclusão de exercícios repetidos
+        // Bloqueia a inclusão de exercícios repetidos
       } while (_.find(ret, e => e.enunciado === ex.enunciado));
       ret.push(ex);
     }
@@ -94,8 +142,11 @@ export class FCExerciciosService {
   }
 
   // tested
-  gerarEnunciadoQuestaoSimplesInline(questao: QuestaoSimples): string {
-    return questao.parcelas.join(questao.operacao);
+  gerarEnunciadoQuestaoSimplesInline(questao: QuestaoSimples): Enunciado {
+    return {
+      tipo: ETipoEnunciado.TEXTO,
+      conteudo: questao.parcelas.join(questao.operacao)
+    };
   }
 
   // tested

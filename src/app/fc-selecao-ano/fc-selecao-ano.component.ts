@@ -16,7 +16,7 @@ export class FcSelecaoAnoComponent implements OnInit {
 
   ngOnInit() {
     this.fcDataService.getTiposQuestoes()
-    .then(tqs => {
+    .subscribe(tqs => {
       this.tiposQuestoes = tqs.filter(tq => this.ano.idsTiposQuestoes.indexOf(tq._id) !== -1);
     });
   }

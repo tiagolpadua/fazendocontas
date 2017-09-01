@@ -5,16 +5,14 @@
   <header class="jumbotron">
     <h3>{{tipoQuestao.descricao}}</h3>
     <div *ngIf="indiceExercicioAtual < qtdExercicios">
-      <h2 style="text-align: center;">{{exercicios[indiceExercicioAtual].enunciado}}</h2>
+      <h2 style="text-align: center;">{{exercicios[indiceExercicioAtual].enunciado.conteudo}}</h2>
       <p>
         <progressbar value="{{getPercentualCompleto()}}"></progressbar>
       </p>
     </div>
   </header>
   <div *ngIf="indiceExercicioAtual < qtdExercicios" class="row">
-    <p *ngFor="let resposta of exercicios[indiceExercicioAtual].respostas; let i = index" class="col-md-6">
-      <!-- <a (click)="selecionarResposta(i)" class="btn btn-primary btn-large btn-block">{{resposta}}</a> -->
-      <!-- <a (click)="selecionarResposta(i)" class="btn btn-primary btn-sq btn-lg btn-block">{{resposta}}</a> -->
+    <p *ngFor="let resposta of exercicios[indiceExercicioAtual].respostas; let i = index" class="col-xs-6">
       <a (click)="selecionarResposta(i)" class="btn btn-primary btn-sq-lg btn-lg btn-block" style="padding: 60px">
         {{resposta}}
       </a>
@@ -25,7 +23,7 @@
       <h4 class="alert-heading">Parabéns!</h4>
       <p>Você conseguiu concluir a série de exercícios sem nenhum erro!</p>
     </alert>
-    <p class="col-md-6 mb-8">
+    <p class="text-center">
       <a (click)="gerarExercicios()" class="btn btn-primary">Refazer</a>
       <a [routerLink]="['/home']" class="btn btn-info">Início</a>
     </p>

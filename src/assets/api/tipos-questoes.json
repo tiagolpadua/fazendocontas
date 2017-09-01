@@ -17,5 +17,10 @@
     "_id": "3",
     "descricao": "Subtração simples de números até 100",
     "funcao": "gerarExerciciosSubtracaoAte100"
+  },
+  {
+    "_id": "4",
+    "descricao": "Contagem de figuras até 10",
+    "funcao": "gerarExerciciosContagemImagensAte10"
   }
 ]

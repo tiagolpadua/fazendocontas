@@ -12,8 +12,19 @@ export class TipoQuestao extends IdDescricao {
   funcao: string;
 }
 
+export enum ETipoEnunciado {
+  TEXTO,
+  IMAGEM,
+  LISTA_DE_IMAGENS,
+}
+
+export class Enunciado {
+  tipo: ETipoEnunciado;
+  conteudo: string;
+}
+
 export class Exercicio {
-  enunciado: string;
+  enunciado: Enunciado;
   respostas: string[];
   indiceRespostaCorreta: number;
 }
