@@ -35,11 +35,11 @@ export class FCExerciciosService {
         return {
           funcaoGeradoraExercicio: qtd => this.gerarExerciciosSomaAte100(qtd)
         };
-      case ETipoQuestao.SUBRACAO_ATE_10:
+      case ETipoQuestao.SUBTRACAO_ATE_10:
         return {
           funcaoGeradoraExercicio: qtd => this.gerarExerciciosSubtracaoAte10(qtd)
         };
-      case ETipoQuestao.SUBRACAO_ATE_100:
+      case ETipoQuestao.SUBTRACAO_ATE_100:
         return {
           funcaoGeradoraExercicio: qtd => this.gerarExerciciosSubtracaoAte100(qtd)
         };
@@ -245,5 +245,20 @@ export class FCExerciciosService {
   // tested
   curryBinaryFunction<T>(a: T, b: T, f: (x: T, y: T) => T): () => T {
     return () => f(a, b);
+  }
+
+  /* tslint:disable:no-bitwise */
+  hashCode(text: string) {
+    let hash = 0, i: number, chr: number;
+    if (text.length === 0) {
+      return hash;
+    }
+
+    for (i = 0; i < text.length; i++) {
+      chr = text.charCodeAt(i);
+      hash = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
   }
 }

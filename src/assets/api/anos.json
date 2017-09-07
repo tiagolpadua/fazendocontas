@@ -1,13 +1,13 @@
 [{
     "_id": 0,
     "titulo": "Primeiro Ano Fundamental",
-    "descricao": "Exercícios simples de adição e subtração com números até 10.",
+    "descricao": "Exercícios com números até 10.",
     "idsTiposQuestoes": ["0", "1", "4"]
   },
   {
     "_id": 1,
     "titulo": "Segundo Ano Fundamental",
-    "descricao": "Exercícios de adição e subtração com números até 100.",
+    "descricao": "Exercícios com números até 100.",
     "idsTiposQuestoes": ["2", "3"]
   }
 ]
