@@ -5,7 +5,7 @@ import { FcDataService } from '../fc-services/fc-data.services';
 import { FCExerciciosService } from '../fc-services/fc-exercicios.services';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
-import { Exercicio } from '../fc-models/fc-data.models';
+import { Exercicio, TFuncaoGeradoraExercicio } from '../fc-models/fc-data.models';
 
 @Component({
   selector: 'app-fc-exercicio',
@@ -44,13 +44,6 @@ export class FcExercicioComponent implements OnInit {
           window.alert(msg);
           throw msg;
         }
-
-        if (!this.fcExerciciosService[this.tipoQuestao.funcao]) {
-          const msg = `Função geradora não localizada para o tipo de questão: ${idTipoQuestao} - ${this.tipoQuestao.funcao}.}`;
-          window.alert(msg);
-          throw msg;
-        }
-
         this.gerarExercicios();
       });
   }
@@ -64,9 +57,13 @@ export class FcExercicioComponent implements OnInit {
     }
   }
 
-  private gerarExercicios() {
+  gerarExercicios() {
     this.indiceExercicioAtual = 0;
-    this.exercicios = this.fcExerciciosService[this.tipoQuestao.funcao](this.qtdExercicios);
+    this.fcExerciciosService.getDescritorPorTipoQuestao(this.tipoQuestao.tipo)
+      .funcaoGeradoraExercicio(this.qtdExercicios)
+      .then(exercicios => {
+        this.exercicios = exercicios;
+      });
   }
 
   getPercentualCompleto() {

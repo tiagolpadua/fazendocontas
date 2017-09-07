@@ -1,12 +1,20 @@
 import * as _ from 'underscore';
 
 import { Injectable } from '@angular/core';
-import { Enunciado, ETipoEnunciado, Exercicio, QuestaoSimples } from '../fc-models/fc-data.models';
-import { FcDataService } from '../fc-services/fc-data.services';
+import {
+  Enunciado,
+  ETipoEnunciado,
+  ETipoQuestao,
+  Exercicio,
+  IDescritorTipoQuestao,
+  QuestaoSimples,
+  TFuncaoGeradoraExercicio,
+  TFuncaoGeradoraQuestao,
+  TFuncaoGeradoraQuestaoAritmetica,
+  TFuncaoGeradoraEnunciado
+} from '../fc-models/fc-data.models';
 
-type IGeradorQuestao = () => QuestaoSimples;
-type IGeradorEnunciado = (questao: QuestaoSimples) => Enunciado;
-type IFuncaoGeradora = (min: number, max: number, qtdParcelas: number) => QuestaoSimples;
+import { FcDataService } from '../fc-services/fc-data.services';
 
 const QTD_RESPOSTAS_BASE = 4;
 
@@ -16,6 +24,33 @@ export class FCExerciciosService {
   constructor(
     private fcDataService: FcDataService
   ) { }
+
+  getDescritorPorTipoQuestao(tipo: ETipoQuestao): IDescritorTipoQuestao {
+    switch (tipo) {
+      case ETipoQuestao.SOMA_ATE_10:
+        return {
+          funcaoGeradoraExercicio: qtd => this.gerarExerciciosSomaAte10(qtd)
+        };
+      case ETipoQuestao.SOMA_ATE_100:
+        return {
+          funcaoGeradoraExercicio: qtd => this.gerarExerciciosSomaAte100(qtd)
+        };
+      case ETipoQuestao.SUBRACAO_ATE_10:
+        return {
+          funcaoGeradoraExercicio: qtd => this.gerarExerciciosSubtracaoAte10(qtd)
+        };
+      case ETipoQuestao.SUBRACAO_ATE_100:
+        return {
+          funcaoGeradoraExercicio: qtd => this.gerarExerciciosSubtracaoAte100(qtd)
+        };
+      case ETipoQuestao.CONTA_IMAGENS_ATE_10:
+        return {
+          funcaoGeradoraExercicio: qtd => this.gerarExerciciosContagemImagensAte10(qtd)
+        };
+      default:
+        throw new Error(`Tipo não esperado: ${tipo}`);
+    }
+  }
 
   // tested
   gerarExerciciosContagemImagensAte10(qtd: number): Promise<Exercicio[]> {
@@ -37,7 +72,7 @@ export class FCExerciciosService {
       const e = new Exercicio();
       e.enunciado = {
         tipo: ETipoEnunciado.LISTA_DE_IMAGENS,
-        conteudo: img
+        conteudo: _.times(n, _.constant(img))
       };
       e.indiceRespostaCorreta = _.random(0, QTD_RESPOSTAS_BASE - 1);
       e.respostas = [];
@@ -58,7 +93,7 @@ export class FCExerciciosService {
   }
 
   // tested
-  gerarExerciciosSimples(qtd: number, funcaoGeradora: IFuncaoGeradora,
+  gerarExerciciosAritmeticaSimples(qtd: number, funcaoGeradora: TFuncaoGeradoraQuestaoAritmetica,
     min: number, max: number, qtdParcelas: number): Exercicio[] {
     return this.gerarExercicios(qtd, QTD_RESPOSTAS_BASE,
       () => funcaoGeradora(min, max, qtdParcelas),
@@ -67,16 +102,8 @@ export class FCExerciciosService {
 
   // tested
   gerarExerciciosSubtracao(qtd: number, min: number, max: number, qtdParcelas: number): Exercicio[] {
-    return this.gerarExerciciosSimples(qtd, this.gerarQuestaoAleatoriaSubtracao, min, max, qtdParcelas);
+    return this.gerarExerciciosAritmeticaSimples(qtd, this.gerarQuestaoAleatoriaSubtracao, min, max, qtdParcelas);
   }
-
-  // gerarExerciciosTabuada2(qtd: number): Exercicio[] {
-  //   return this.gerarExerciciosTabuada(qtd, 2, 0, 9);
-  // }
-
-  // gerarExerciciosTabuada(qtd: number, base: number, min: number, max: number) {
-
-  // }
 
   gerarQuestaoTabuadaComBase(base: number, min: number, max: number): QuestaoSimples {
     const posicaoBase = _.random(0, 1);
@@ -94,33 +121,41 @@ export class FCExerciciosService {
   }
 
   // tested
-  gerarExerciciosSubtracaoAte10(qtd: number): Exercicio[] {
-    return this.gerarExerciciosSubtracao(qtd, 1, 10, 2);
+  gerarExerciciosSubtracaoAte10(qtd: number): Promise<Exercicio[]> {
+    return new Promise(resolve => {
+      resolve(this.gerarExerciciosSubtracao(qtd, 1, 10, 2));
+    });
   }
 
   // tested
-  gerarExerciciosSubtracaoAte100(qtd: number): Exercicio[] {
-    return this.gerarExerciciosSubtracao(qtd, 10, 100, 2);
+  gerarExerciciosSubtracaoAte100(qtd: number): Promise<Exercicio[]> {
+    return new Promise(resolve => {
+      resolve(this.gerarExerciciosSubtracao(qtd, 10, 100, 2));
+    });
   }
 
   gerarExerciciosSoma(qtd: number, min: number, max: number, qtdParcelas: number): Exercicio[] {
-    return this.gerarExerciciosSimples(qtd, this.gerarQuestaoAleatoriaSoma, min, max, qtdParcelas);
+    return this.gerarExerciciosAritmeticaSimples(qtd, this.gerarQuestaoAleatoriaSoma, min, max, qtdParcelas);
   }
 
   // tested
-  gerarExerciciosSomaAte10(qtd: number): Exercicio[] {
-    return this.gerarExerciciosSoma(qtd, 1, 10, 2);
+  gerarExerciciosSomaAte10(qtd: number): Promise<Exercicio[]> {
+    return new Promise(resolve => {
+      resolve(this.gerarExerciciosSoma(qtd, 1, 10, 2));
+    });
   }
 
-  gerarExerciciosSomaAte100(qtd: number): Exercicio[] {
-    return this.gerarExerciciosSoma(qtd, 10, 100, 2);
+  gerarExerciciosSomaAte100(qtd: number): Promise<Exercicio[]> {
+    return new Promise(resolve => {
+      resolve(this.gerarExerciciosSoma(qtd, 10, 100, 2));
+    });
   }
 
   // tested
   gerarExercicios(qtdExercicios: number,
     qtdRespostas: number,
-    geradorQuestao: IGeradorQuestao,
-    geradorEnunciado: IGeradorEnunciado): Exercicio[] {
+    geradorQuestao: TFuncaoGeradoraQuestao,
+    geradorEnunciado: TFuncaoGeradoraEnunciado): Exercicio[] {
     const ret: Exercicio[] = [];
     for (let i = 0; i < qtdExercicios; i++) {
       let ex: Exercicio;

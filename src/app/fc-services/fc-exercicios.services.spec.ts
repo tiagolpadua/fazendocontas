@@ -40,7 +40,7 @@ describe('FCService', () => {
           expect(exs.length).toBe(10);
           exs.forEach(e => {
             expect(e.enunciado.tipo).toBe(ETipoEnunciado.LISTA_DE_IMAGENS);
-            expect(e.enunciado.conteudo.length).toBeGreaterThan(0);
+            expect(e.enunciado.conteudo).toBeDefined();
             expect(e.respostas.length).toBe(4);
             e.respostas.forEach(r => expect(r.length).toBeGreaterThan(0));
           });
@@ -54,7 +54,7 @@ describe('FCService', () => {
       expect(exs.length).toBe(10);
       _.forEach(exs, ex => {
         expect(ex.enunciado.tipo).toBe(ETipoEnunciado.LISTA_DE_IMAGENS);
-        expect(imgs.indexOf(ex.enunciado.conteudo)).toBeGreaterThanOrEqual(0);
+        expect(ex.enunciado.conteudo).toBeDefined();
         expect(ex.indiceRespostaCorreta).toBeGreaterThanOrEqual(0);
         expect(ex.indiceRespostaCorreta).toBeLessThanOrEqual(3);
         _.each(ex.respostas, r => {
@@ -66,7 +66,7 @@ describe('FCService', () => {
 
   it('deve gerar corretamente exercicios simples',
     inject([FCExerciciosService], (service: FCExerciciosService) => {
-      const exs = service.gerarExerciciosSimples(10, service.gerarQuestaoAleatoriaSubtracao, 0, 10, 2);
+      const exs = service.gerarExerciciosAritmeticaSimples(10, service.gerarQuestaoAleatoriaSubtracao, 0, 10, 2);
       expect(exs.length).toBe(10);
     }));
 
@@ -148,26 +148,30 @@ describe('FCService', () => {
 
   it('deve gerar corretamente exercícios de subtracao até 10',
     inject([FCExerciciosService], (service: FCExerciciosService) => {
-      const exercicios = service.gerarExerciciosSubtracaoAte10(5);
-      exercicios.forEach(ex => {
-        expect(ex.enunciado.tipo).toBe(ETipoEnunciado.TEXTO);
-        expect(ex.enunciado.conteudo.length).toBeGreaterThan(0);
-        expect(ex.respostas.length).toBe(4);
-        expect(ex.indiceRespostaCorreta).toBeGreaterThanOrEqual(0);
-        expect(ex.indiceRespostaCorreta).toBeLessThanOrEqual(3);
-      });
+      service.gerarExerciciosSubtracaoAte10(5)
+        .then(exercicios => {
+          exercicios.forEach(ex => {
+            expect(ex.enunciado.tipo).toBe(ETipoEnunciado.TEXTO);
+            expect(ex.enunciado.conteudo.length).toBeGreaterThan(0);
+            expect(ex.respostas.length).toBe(4);
+            expect(ex.indiceRespostaCorreta).toBeGreaterThanOrEqual(0);
+            expect(ex.indiceRespostaCorreta).toBeLessThanOrEqual(3);
+          });
+        });
     }));
 
   it('deve gerar corretamente exercícios de subtracao até 100',
     inject([FCExerciciosService], (service: FCExerciciosService) => {
-      const exercicios = service.gerarExerciciosSubtracaoAte100(5);
-      exercicios.forEach(ex => {
-        expect(ex.enunciado.tipo).toBe(ETipoEnunciado.TEXTO);
-        expect(ex.enunciado.conteudo.length).toBeGreaterThan(0);
-        expect(ex.respostas.length).toBe(4);
-        expect(ex.indiceRespostaCorreta).toBeGreaterThanOrEqual(0);
-        expect(ex.indiceRespostaCorreta).toBeLessThanOrEqual(3);
-      });
+      service.gerarExerciciosSubtracaoAte100(5)
+        .then(exercicios => {
+          exercicios.forEach(ex => {
+            expect(ex.enunciado.tipo).toBe(ETipoEnunciado.TEXTO);
+            expect(ex.enunciado.conteudo.length).toBeGreaterThan(0);
+            expect(ex.respostas.length).toBe(4);
+            expect(ex.indiceRespostaCorreta).toBeGreaterThanOrEqual(0);
+            expect(ex.indiceRespostaCorreta).toBeLessThanOrEqual(3);
+          });
+        });
     }));
 
   it('deve gerar corretamente enunciados para questões simples',
@@ -225,15 +229,16 @@ describe('FCService', () => {
 
   it('deve gerar corretamente exercícios de soma até 10',
     inject([FCExerciciosService], (service: FCExerciciosService) => {
-      const exs = service.gerarExerciciosSomaAte10(10);
-      expect(exs.length).toBe(10);
-      exs.forEach(e => {
-        expect(e.enunciado.tipo).toBe(ETipoEnunciado.TEXTO);
-        expect(e.enunciado.conteudo.length).toBeGreaterThan(0);
-        expect(e.enunciado.conteudo).toContain('+');
-        expect(e.respostas.length === 4);
-        e.respostas.forEach(r => expect(r.length).toBeGreaterThan(0));
-      });
+      service.gerarExerciciosSomaAte10(10)
+        .then(exercicios => {
+          expect(exercicios.length).toBe(10);
+          exercicios.forEach(e => {
+            expect(e.enunciado.tipo).toBe(ETipoEnunciado.TEXTO);
+            expect(e.enunciado.conteudo.length).toBeGreaterThan(0);
+            expect(e.enunciado.conteudo).toContain('+');
+            expect(e.respostas.length === 4);
+            e.respostas.forEach(r => expect(r.length).toBeGreaterThan(0));
+          });
+        });
     }));
-
 });

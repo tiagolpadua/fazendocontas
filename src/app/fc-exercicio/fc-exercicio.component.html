@@ -5,7 +5,17 @@
   <header class="jumbotron">
     <h3>{{tipoQuestao.descricao}}</h3>
     <div *ngIf="indiceExercicioAtual < qtdExercicios">
-      <h2 style="text-align: center;">{{exercicios[indiceExercicioAtual].enunciado.conteudo}}</h2>
+      <div [ngSwitch]="exercicios[indiceExercicioAtual].enunciado.tipo" class="row">
+        <!-- CONTA_IMAGENS_ATE_10 -->
+        <template [ngSwitchCase]="'102'">
+          <div *ngFor="let img of exercicios[indiceExercicioAtual].enunciado.conteudo">
+            <img class="col-xs-2" [src]="'/assets/images/' + img" />
+          </div>
+        </template>
+        <template ngSwitchDefault>
+          <h2 style="text-align: center;">{{exercicios[indiceExercicioAtual].enunciado.conteudo}}</h2>
+        </template>
+      </div>
       <p>
         <progressbar value="{{getPercentualCompleto()}}"></progressbar>
       </p>
@@ -14,7 +24,11 @@
   <div *ngIf="indiceExercicioAtual < qtdExercicios" class="row">
     <p *ngFor="let resposta of exercicios[indiceExercicioAtual].respostas; let i = index" class="col-xs-6">
       <a (click)="selecionarResposta(i)" class="btn btn-primary btn-sq-lg btn-lg btn-block" style="padding: 60px">
-        {{resposta}}
+        <div [ngSwitch]="tipoQuestao.tipo">
+          <template ngSwitchDefault>
+            {{resposta}}
+          </template>
+        </div>
       </a>
     </p>
   </div>

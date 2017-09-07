@@ -1,26 +1,26 @@
 [{
     "_id": "0",
     "descricao": "Soma simples de números até 10",
-    "funcao": "gerarExerciciosSomaAte10"
+    "tipo": 100
   },
   {
     "_id": "1",
     "descricao": "Subtração simples de números até 10",
-    "funcao": "gerarExerciciosSubtracaoAte10"
+    "tipo": 101
   },
   {
     "_id": "2",
     "descricao": "Soma simples de números até 100",
-    "funcao": "gerarExerciciosSomaAte100"
+    "tipo": 102
   },
   {
     "_id": "3",
     "descricao": "Subtração simples de números até 100",
-    "funcao": "gerarExerciciosSubtracaoAte100"
+    "tipo": 103
   },
   {
     "_id": "4",
     "descricao": "Contagem de figuras até 10",
-    "funcao": "gerarExerciciosContagemImagensAte10"
+    "tipo": 104
   }
 ]
