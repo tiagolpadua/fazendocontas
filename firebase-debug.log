@@ -1,0 +1,107 @@
+[debug] [2017-09-07T17:12:45.904Z] ----------------------------------------------------------------------
+[debug] [2017-09-07T17:12:45.907Z] Command:       /home/tiago/.nvm/versions/node/v6.11.2/bin/node /home/tiago/.nvm/versions/node/v6.11.2/bin/firebase serve
+[debug] [2017-09-07T17:12:45.908Z] CLI Version:   3.10.0
+[debug] [2017-09-07T17:12:45.908Z] Platform:      linux
+[debug] [2017-09-07T17:12:45.908Z] Node Version:  v6.11.2
+[debug] [2017-09-07T17:12:45.908Z] Time:          Thu Sep 07 2017 14:12:45 GMT-0300 (BRT)
+[debug] [2017-09-07T17:12:45.908Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-07T17:12:45.921Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-07T17:12:45.921Z] > authorizing via signed-in user
+[debug] [2017-09-07T17:12:45.923Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-07T17:12:45.924Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/0et_GphrVrwEnv-t7QECMfoZyI9WpgyZ6Fa8ZJFagoI',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Sep 07 2017 14:12:45 GMT-0300 (BRT)
+[debug] [2017-09-07T17:12:46.740Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:12:46.772Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fazendocontas-aa396  
+ Thu Sep 07 2017 14:12:46 GMT-0300 (BRT)
+[debug] [2017-09-07T17:12:47.699Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:12:47.700Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/fazendocontas-aa396/tokens  
+ Thu Sep 07 2017 14:12:47 GMT-0300 (BRT)
+[debug] [2017-09-07T17:12:48.603Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/tiago/git/fazendocontas'...
+[info] 
+[debug] [2017-09-07T17:12:48.609Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/fazendocontas-aa396  
+ Thu Sep 07 2017 14:12:48 GMT-0300 (BRT)
+[debug] [2017-09-07T17:12:49.552Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:12:49.553Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/290811124634/clients/_:getWebAppConfig  
+ Thu Sep 07 2017 14:12:49 GMT-0300 (BRT)
+[debug] [2017-09-07T17:12:51.157Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:12:51.180Z] TypeError: Cannot read property 'public' of undefined
+    at Server.<anonymous> (/home/tiago/.nvm/versions/node/v6.11.2/lib/node_modules/firebase-tools/lib/serve/hosting.js:34:17)
+    at Server.g (events.js:292:16)
+    at emitNone (events.js:86:13)
+    at Server.emit (events.js:185:7)
+    at emitListeningNT (net.js:1284:10)
+    at _combinedTickCallback (internal/process/next_tick.js:77:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2017-09-07T17:14:21.530Z] ----------------------------------------------------------------------
+[debug] [2017-09-07T17:14:21.535Z] Command:       /home/tiago/.nvm/versions/node/v6.11.2/bin/node /home/tiago/.nvm/versions/node/v6.11.2/bin/firebase serve --debug
+[debug] [2017-09-07T17:14:21.536Z] CLI Version:   3.10.0
+[debug] [2017-09-07T17:14:21.536Z] Platform:      linux
+[debug] [2017-09-07T17:14:21.536Z] Node Version:  v6.11.2
+[debug] [2017-09-07T17:14:21.537Z] Time:          Thu Sep 07 2017 14:14:21 GMT-0300 (BRT)
+[debug] [2017-09-07T17:14:21.537Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-07T17:14:21.550Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-07T17:14:21.551Z] > authorizing via signed-in user
+[debug] [2017-09-07T17:14:21.554Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fazendocontas-aa396  
+ Thu Sep 07 2017 14:14:21 GMT-0300 (BRT)
+[debug] [2017-09-07T17:14:22.619Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:14:22.621Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/fazendocontas-aa396/tokens  
+ Thu Sep 07 2017 14:14:22 GMT-0300 (BRT)
+[debug] [2017-09-07T17:14:23.569Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/tiago/git/fazendocontas'...
+[info] 
+[debug] [2017-09-07T17:14:23.573Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/fazendocontas-aa396  
+ Thu Sep 07 2017 14:14:23 GMT-0300 (BRT)
+[debug] [2017-09-07T17:14:24.580Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:14:24.582Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/290811124634/clients/_:getWebAppConfig  
+ Thu Sep 07 2017 14:14:24 GMT-0300 (BRT)
+[debug] [2017-09-07T17:14:26.034Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:14:26.056Z] TypeError: Cannot read property 'public' of undefined
+    at Server.<anonymous> (/home/tiago/.nvm/versions/node/v6.11.2/lib/node_modules/firebase-tools/lib/serve/hosting.js:34:17)
+    at Server.g (events.js:292:16)
+    at emitNone (events.js:86:13)
+    at Server.emit (events.js:185:7)
+    at emitListeningNT (net.js:1284:10)
+    at _combinedTickCallback (internal/process/next_tick.js:77:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2017-09-07T17:17:17.482Z] ----------------------------------------------------------------------
+[debug] [2017-09-07T17:17:17.487Z] Command:       /home/tiago/.nvm/versions/node/v6.11.2/bin/node /home/tiago/.nvm/versions/node/v6.11.2/bin/firebase serve --debug
+[debug] [2017-09-07T17:17:17.488Z] CLI Version:   3.10.0
+[debug] [2017-09-07T17:17:17.488Z] Platform:      linux
+[debug] [2017-09-07T17:17:17.488Z] Node Version:  v6.11.2
+[debug] [2017-09-07T17:17:17.488Z] Time:          Thu Sep 07 2017 14:17:17 GMT-0300 (BRT)
+[debug] [2017-09-07T17:17:17.488Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-07T17:17:17.502Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-07T17:17:17.502Z] > authorizing via signed-in user
+[debug] [2017-09-07T17:17:17.506Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fazendocontas-aa396  
+ Thu Sep 07 2017 14:17:17 GMT-0300 (BRT)
+[debug] [2017-09-07T17:17:18.922Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:17:18.925Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/fazendocontas-aa396/tokens  
+ Thu Sep 07 2017 14:17:18 GMT-0300 (BRT)
+[debug] [2017-09-07T17:17:19.853Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/tiago/git/fazendocontas'...
+[info] 
+[debug] [2017-09-07T17:17:19.856Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/fazendocontas-aa396  
+ Thu Sep 07 2017 14:17:19 GMT-0300 (BRT)
+[debug] [2017-09-07T17:17:20.700Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T17:17:20.701Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/290811124634/clients/_:getWebAppConfig  
+ Thu Sep 07 2017 14:17:20 GMT-0300 (BRT)
+[debug] [2017-09-07T17:17:22.374Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[info] Shutting down...

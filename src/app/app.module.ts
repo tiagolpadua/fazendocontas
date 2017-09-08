@@ -5,6 +5,12 @@ import { NgModule } from '@angular/core';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AlertModule } from 'ngx-bootstrap/alert';
 
+// Firebase
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+
 // https://github.com/PointInside/ng2-toastr
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
@@ -45,7 +51,11 @@ export class CustomOption extends ToastOptions {
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    routing
+    routing,
+    // AngularFireModule.initializeApp(environment.firebase, 'my-app-name'), // imports firebase/app needed for everything
+    AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
+    AngularFireDatabaseModule, // imports firebase/database, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
   ],
   providers: [FcDataService, FCExerciciosService,
     { provide: ToastOptions, useClass: CustomOption },
